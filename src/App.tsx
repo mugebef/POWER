@@ -11,7 +11,7 @@ export default function App() {
             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
               <Rocket className="w-6 h-6 text-white" />
             </div>
-            <span className="text-xl font-bold tracking-tight">CyberLaunch</span>
+            <span className="text-xl font-bold tracking-tight">Styn Love</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
             <a href="#" className="hover:text-white transition-colors">Features</a>
@@ -53,7 +53,7 @@ export default function App() {
               </h1>
               
               <p className="text-lg md:text-xl text-gray-400 mb-10 leading-relaxed">
-                CyberLaunch provides the ultimate infrastructure for your applications. 
+                Styn Love provides the ultimate infrastructure for your applications. 
                 Optimized for Cyberpanel, built for speed, and secured by default.
               </p>
 
@@ -113,7 +113,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex items-center gap-2 opacity-50">
             <Rocket className="w-5 h-5" />
-            <span className="text-sm font-semibold tracking-tight">CyberLaunch &copy; 2026</span>
+            <span className="text-sm font-semibold tracking-tight">Styn Love &copy; 2026</span>
           </div>
           
           <div className="flex items-center gap-6">
