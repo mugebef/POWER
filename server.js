@@ -15,13 +15,18 @@ async function startServer() {
   });
 
   const isProduction = process.env.NODE_ENV === "production";
+  console.log(`Current NODE_ENV: ${process.env.NODE_ENV}`);
 
   // Vite middleware for development
   if (!isProduction) {
     console.log("Running in development mode...");
     const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: { 
+        middlewareMode: true,
+        hmr: false, // Disable HMR to prevent port conflicts
+        watch: { usePolling: true }
+      },
       appType: "spa",
     });
     app.use(vite.middlewares);
