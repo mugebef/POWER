@@ -15,34 +15,38 @@ async function startServer() {
     res.json({ status: "ok", message: "Styn Love server is healthy" });
   });
 
-  const distPath = path.join(process.cwd(), 'dist');
-  const distExists = fs.existsSync(distPath);
+  const distPath = path.join(__dirname, 'dist');
+  const indexHtmlPath = path.join(distPath, 'index.html');
+  const distExists = fs.existsSync(indexHtmlPath);
   
-  // Robust production detection: 
-  // 1. Explicitly set to "production"
-  // 2. OR 'dist' folder exists and NODE_ENV is not "development"
+  // Force production if dist/index.html exists, unless explicitly set to development
   const isProduction = process.env.NODE_ENV === "production" || (distExists && process.env.NODE_ENV !== "development");
 
-  console.log(`Current NODE_ENV: ${process.env.NODE_ENV || 'undefined'}`);
-  console.log(`Dist folder exists: ${distExists}`);
+  console.log("-----------------------------------------");
+  console.log(`Styn Love Startup Info:`);
+  console.log(`NODE_ENV: ${process.env.NODE_ENV || 'not set'}`);
+  console.log(`Checking for production build at: ${indexHtmlPath}`);
+  console.log(`Production build found: ${distExists}`);
+  console.log(`Mode: ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'}`);
+  console.log("-----------------------------------------");
 
   // Vite middleware for development
   if (!isProduction) {
-    console.log("Running in development mode...");
+    console.log("Starting Vite development engine...");
     const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { 
         middlewareMode: true,
-        hmr: false, // Disable HMR to prevent port conflicts
+        hmr: false,
       },
       appType: "spa",
     });
     app.use(vite.middlewares);
   } else {
-    console.log("Running in production mode...");
+    console.log("Serving production build from /dist...");
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+      res.sendFile(indexHtmlPath);
     });
   }
 
