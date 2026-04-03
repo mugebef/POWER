@@ -7,15 +7,18 @@ const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT || 3000;
 
   // API routes can be added here
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", message: "Styn Love server is healthy" });
   });
 
+  const isProduction = process.env.NODE_ENV === "production";
+
   // Vite middleware for development
-  if (process.env.NODE_ENV !== "production") {
+  if (!isProduction) {
+    console.log("Running in development mode...");
     const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
@@ -23,6 +26,7 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
+    console.log("Running in production mode...");
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
