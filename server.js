@@ -38,6 +38,8 @@ async function startServer() {
       server: { 
         middlewareMode: true,
         hmr: false,
+        port: 3002,
+        strictPort: true,
       },
       appType: "spa",
     });
